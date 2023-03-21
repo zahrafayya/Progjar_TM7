@@ -1,7 +1,9 @@
 import socket
 import os
 
-server_address = ('127.0.0.1', 5000)
+s_addr = input("Enter server address: ")
+
+server_address = (s_addr, 5000)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 filename = input("Enter file name: ")
@@ -21,6 +23,9 @@ with open(cwd + "\\" + filename, "rb") as fi:
             while (buf):
                client_socket.sendto(buf, server_address)
                buf = fi.read(1024)
+
+msg, client_address = client_socket.recvfrom(1024)
+print(str(msg.decode()))
                
 
 

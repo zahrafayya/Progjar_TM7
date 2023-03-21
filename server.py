@@ -2,7 +2,9 @@ import socket
 import math
 import os
 
-server_adddress = ('127.0.0.1', 5000)
+s_addr = input("Enter server address: ")
+
+server_adddress = (s_addr, 5000)
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(server_adddress)
 
@@ -27,4 +29,9 @@ f.close()
 
 size_received = os.path.getsize(cwd + "\\output\\" + filename)
 
-print("Percentage of data received: " + str((size_received/size) * 100) + "%")
+msg = "Percentage of data received: " + str((size_received/size) * 100) + "%"
+
+server_socket.sendto(msg.encode(), client_address)
+
+print("File "+filename+" has been downloaded.")
+print(msg)
